@@ -9,9 +9,11 @@
 // 바이너리 서치 트리에는 규칙이있는데 루트를 기준으로 왼쪽 자식은 루트보다 작은값 오른쪽은 큰값이 배치된다.
 
 
+import java.util.Optional;
+
 public class BinarySearchTree {
 
-    static public class BST{
+    static public class BST {
 
         NodeInfo currRootNode = null;
 
@@ -19,7 +21,8 @@ public class BinarySearchTree {
             int data = 0;
             NodeInfo left;
             NodeInfo right;
-            NodeInfo(int data){
+
+            NodeInfo(int data) {
                 this.data = data;
                 left = null;
                 right = null;
@@ -28,9 +31,9 @@ public class BinarySearchTree {
         }
 
 
-        public void inorder(NodeInfo currRootNode){
+        public void inorder(NodeInfo currRootNode) {
 
-            if(currRootNode == null) return;
+            if (currRootNode == null) return;
 
             inorder(currRootNode.left);
             System.out.println(currRootNode.data);
@@ -38,43 +41,105 @@ public class BinarySearchTree {
         }
 
 
-        public void search(NodeInfo currNode, int data){
-
-
+        public void search(NodeInfo currNode, int data) {
 
 
         }
 
-        public NodeInfo insert(NodeInfo currRootNode, int data){
+        public NodeInfo insert(NodeInfo currRootNode, int data) {
 
-
-
-            if( currRootNode == null){
+            if (currRootNode == null) {
                 currRootNode = new NodeInfo(data);
-            } else if( data <= currRootNode.data){
-                currRootNode.left = insert(currRootNode.left,data);
+            } else if (data <= currRootNode.data) {
+                currRootNode.left = insert(currRootNode.left, data);
             } else {
-                currRootNode.right = insert(currRootNode.right,data);
+                currRootNode.right = insert(currRootNode.right, data);
             }
 
 
             return currRootNode;
         }
 
-        public void delete(){
+
+        //해당 노드가 있는지 없는지 탐색하기
+        public NodeInfo searchingNode(NodeInfo targetNode, int data) {
+
+            if (targetNode.data < data) {
+                return searchingNode(targetNode.right, data);
+            } else if (targetNode.data > data) {
+                return searchingNode(targetNode.left, data);
+            } else {
+                return targetNode;
+            }
+
+        }
+        // 바이너리 트리에서 삭제는 크게 두가지 종류가있다.
+        // 자식 노드가 없는 부모노드가 삭제 될때,
+        // 자식 노드가 있는 부모가 삭제될때 가있다.
+        // 첫번째로 자식노드가 없는 부모노드가 삭제되면 연결을 그냥 끊으면된다.
+        // 둘째로 자식노드가 있는 부모노드가 삭제되는건데,
+        // 부모 노드가 삭제되면 자식노드중 하나가 부모노드로 교체되어야한다.
+        // 바이너리 서치트리는 부모노드 기준에서 왼쪽이 작은수 오른쪽이 큰수이기때문에
+        // 왼쪽에서 가장 큰 노드거나 또는 오른쪽에서 가장 작은 노드가 대체되어야한다.
+
+        public NodeInfo deletion(NodeInfo currNode, int data) {
 
 
+            System.out.println("CurrNode Data" + currNode.data);
 
 
+            if (currNode.data < data) {
 
+                System.out.println("Right Node " + currNode.right.data);
+                currNode.right = deletion(currNode.right, data);
+
+            } else if (currNode.data > data) {
+
+                currNode.left =  deletion(currNode.left, data);
+               System.out.println("Left Node" + currNode.left.data);
+
+            } else {
+
+                //  한쪽 자식이 없거나 양쪽 자식 둘다 없는경우
+                if(currNode.left == null){
+                    System.out.println("Find Right Node" + currNode.left.data);
+                    return currNode.right;
+
+                } else if( currNode.right == null){
+                    System.out.println("Find left Node" + currNode.left.data);
+                    return currNode.left;
+                }
+
+                // 양쪽 자식이 둘다 있을경우 왼쪽노드의 최대값 / 오른쪽 노드의 최솟값
+                // 보통 왼쪽 최대값으로 찾음
+
+
+                int minData = 0;
+
+               while(currNode.left.right != null){
+                   minData = currNode.left.right.data;
+                   currNode = currNode.left;
+               }
+
+               currNode.data = minData;
+
+               currNode.left = deletion(currNode.left,data);
+
+
+            }
+
+            System.out.println(currNode.data);
+
+            return currNode;
 
         }
 
 
 
 
-
     }
+
+
 
 
     public static void main(String[] args) {
@@ -84,21 +149,38 @@ public class BinarySearchTree {
 
         linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,50);
         linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,30);
+        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,40);
 
         linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,20);
-        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,20);
+        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,25);
+
+        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,10);
+
+        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,5);
+
+        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,6);
+
+        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,4);
 
         linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,70);
 
         linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,60);
 
-        linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,80);
-
 
         linkedList.currRootNode = linkedList.insert(linkedList.currRootNode ,80);
 
+//        linkedList.inorder(linkedList.currRootNode);
 
+//        BST.NodeInfo isFind = linkedList.searchingNode(linkedList.currRootNode, 100);
+
+
+        linkedList.currRootNode = linkedList.deletion(linkedList.currRootNode, 20);
+
+
+        System.out.println("after delete node");
         linkedList.inorder(linkedList.currRootNode);
+
+
 
     }
 
