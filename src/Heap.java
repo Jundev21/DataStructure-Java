@@ -4,11 +4,6 @@
 // 완전 이진트리의 형태를 갖고있으며 최대값과 최소값을 찾는 시간은 O(1) 이며 재 정렬 시간복잡도는 Ologn 을 갖는다.
 // 힙은 순회할때 층단위로 왼쪽에서부터 오른쪽으로 순회되는데 일차 배열로 구현된다.
 
-
-
-
-
-
 // 힙 구현
 
 // 힙 삭제 / 추가
@@ -22,6 +17,8 @@
 // (2*i)+1	왼쪽자식
 // (2*i)+2	오른쪽 자식
 
+//ㄴ
+
 
 public class Heap {
 
@@ -33,18 +30,45 @@ public class Heap {
 
         MaxHeap (int size){
 
-            heapSize = size;
+            heapSize = 0;
             maxHeap = new int[size];
 
         }
 
-        public void insertValue(){
 
+        //노드는 항상 마지막 노드에 추가되고 추가 된 후에 재정렬한다.
+        public void insertValue(int data){
+
+            if(maxHeap.length -1  < heapSize) {
+                System.out.println("over size");
+                return;
+            }
+
+            maxHeap[++heapSize] = data;
+
+
+            heapIfy();
 
         }
 
-        public void heapify(){
 
+        //추가된 데이터 정렬 함수
+        //데이터가 추가되면 해당 부모노드부터 루트노트까지 비교해야한다.
+        public void heapIfy(){
+            int pointLastEl = heapSize;
+
+
+            while(pointLastEl > 1 && maxHeap[pointLastEl] > maxHeap[(pointLastEl-1)/2]){
+
+
+                int tempLastEl = maxHeap[heapSize];
+                int tempParentEl = maxHeap[(heapSize-1)/2];
+
+                maxHeap[(heapSize-1)/2] = tempLastEl;
+                maxHeap[heapSize] = tempParentEl;
+
+                pointLastEl =  pointLastEl/2;
+            }
 
 
 
@@ -53,6 +77,9 @@ public class Heap {
 
         public void findMaxValue(){
 
+            System.out.println(maxHeap[0]);
+
+//            heapIfy();
 
 
         }
@@ -78,6 +105,20 @@ public class Heap {
 
 
         MaxHeap startHeap = new MaxHeap(10);
+
+        startHeap.insertValue(1);
+
+        startHeap.insertValue(2);
+
+        startHeap.insertValue(3);
+
+        startHeap.insertValue(4);
+
+        startHeap.insertValue(5);
+
+        startHeap.displayHeap();
+
+
 
 
 
