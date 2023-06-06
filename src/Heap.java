@@ -32,11 +32,10 @@ public class Heap {
 
             heapSize = 0;
             maxHeap = new int[size];
-
         }
 
 
-        //노드는 항상 마지막 노드에 추가되고 추가 된 후에 재정렬한다.
+        //노드는 항상 마지막 노드에 추가되고 추가 된 후에 재정렬한다.3
         public void insertValue(int data){
 
             if(maxHeap.length -1  < heapSize) {
@@ -44,34 +43,125 @@ public class Heap {
                 return;
             }
 
-            maxHeap[++heapSize] = data;
+            maxHeap[heapSize] = data;
+
+            int pointTreeHeight = heapSize;
+
+            while(maxHeap[pointTreeHeight] > maxHeap[(pointTreeHeight-1)/2]){
+
+                int tempLastEl = maxHeap[pointTreeHeight];
+                int tempParentEl = maxHeap[(pointTreeHeight-1)/2];
+
+                maxHeap[(pointTreeHeight-1)/2] = tempLastEl;
+                maxHeap[pointTreeHeight] = tempParentEl;
+
+                pointTreeHeight =  (pointTreeHeight-1)/2;
+
+            }
+
+            heapSize++;
+        }
 
 
-            heapIfy();
+        public void extractMaxEl(){
+
+            int maxEl = maxHeap[0];
+
+            maxHeap[0] = maxHeap[heapSize-1];
+
+            heapSize--;
+
+            System.out.println("Max Num" + maxEl);
+
+            heapIfyDown(maxHeap,0);
 
         }
 
 
-        //추가된 데이터 정렬 함수
-        //데이터가 추가되면 해당 부모노드부터 루트노트까지 비교해야한다.
-        public void heapIfy(){
-            int pointLastEl = heapSize;
+        // 추가된 데이터 힙으로 재정렬
+
+        public void heapIfyDown( int[] maxHeap, int parentIdx){
+
+            int parentNode = parentIdx;
+            int leftNode = leftNode(parentIdx);
+            int rightNode = rightNode(parentIdx);
 
 
-            while(pointLastEl > 1 && maxHeap[pointLastEl] > maxHeap[(pointLastEl-1)/2]){
+
+            // 만약 부모노드의 차일드보다 큰경우
+            if(maxHeap[parentNode] < maxHeap[leftNode]){
+
+                parentNode = leftNode;
+
+            } else if(maxHeap[parentNode] < maxHeap[rightNode]){
+
+                parentNode = rightNode;
+
+            }
+
+            //자식 노드가 부모노드보다 커서 스왑이 필요한상태.
+
+            if(parentNode != parentIdx){
+
+                System.out.println("Swap" +  maxHeap[parentNode] + " " + maxHeap[leftNode] );
+
+                int tempNode = maxHeap[parentIdx];
+
+                maxHeap[parentIdx] = maxHeap[leftNode];
+                maxHeap[leftNode] = tempNode;
 
 
-                int tempLastEl = maxHeap[heapSize];
-                int tempParentEl = maxHeap[(heapSize-1)/2];
+                heapIfyDown(maxHeap, parentNode);
 
-                maxHeap[(heapSize-1)/2] = tempLastEl;
-                maxHeap[heapSize] = tempParentEl;
-
-                pointLastEl =  pointLastEl/2;
             }
 
 
+        }
 
+
+        void max_heapIfy(int[] a,int i)
+        {
+
+            // left index not a left value;
+            int l=2*i+1;
+
+            // right index
+            int r=2*i+2;
+
+            // largest index
+            int largest=i;
+            if(l<heapSize &&a[l]>a[largest])
+                largest=l;
+            if(r<heapSize &&a[r]>a[largest])
+                largest=r;
+
+            // largest index is left node or right node
+            if(largest!=i)
+            {
+                int t=a[i];
+                a[i]=a[largest];
+                a[largest]=t;
+                max_heapIfy(a,largest);
+            }
+
+        }
+
+
+        public int parentsNode(int data){
+
+            return (data-1)/2;
+
+        }
+
+        public int leftNode(int data){
+
+            return (2 * data) + 1;
+        }
+
+
+        public int rightNode(int data){
+
+            return (2 * data) + 2;
         }
 
 
@@ -81,8 +171,9 @@ public class Heap {
 
 //            heapIfy();
 
-
         }
+
+
 
         public void displayHeap(){
             for(int i=0; i<heapSize; i++){
@@ -116,9 +207,12 @@ public class Heap {
 
         startHeap.insertValue(5);
 
+        startHeap.extractMaxEl();
+
+//        startHeap.displayHeap();
+
+        startHeap.extractMaxEl();
         startHeap.displayHeap();
-
-
 
 
 
