@@ -39,7 +39,7 @@ public class Heap {
         public void insertValue(int data){
 
             if(maxHeap.length -1  < heapSize) {
-                System.out.println("over size");
+                System.out.println("over flow");
                 return;
             }
 
@@ -67,7 +67,15 @@ public class Heap {
 
             int maxEl = maxHeap[0];
 
+            if(heapSize < 0) {
+                System.out.println("under flow");
+            }
+
+
             maxHeap[0] = maxHeap[heapSize-1];
+
+
+            maxHeap[heapSize-1] = 0;
 
             heapSize--;
 
@@ -209,7 +217,7 @@ public class Heap {
 
         startHeap.extractMaxEl();
 
-//        startHeap.displayHeap();
+        startHeap.displayHeap();
 
         startHeap.extractMaxEl();
         startHeap.displayHeap();
