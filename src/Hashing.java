@@ -23,13 +23,17 @@
 
 // set - map 차이점
 // set 은 중복값을 허용하지않고 map 은 중복되는 키값을 허용하지않는다.
-// map 은 반복문을 실행하기위해서 set으로 변환후에 반복문을 사용할 수 있다.
-//set은 중복 자체 등록이안되고
-//map 은 가장 마지막에 들어온 값이 들어간다.
+// map 은 반복문을 실행하기위해서 set 으로 변환후에 반복문을 사용할 수 있다.
+// set 은 중복 자체 등록이안되고
+// map 은 가장 마지막에 들어온 값이 들어간다.
+
+
+// 기본 개념 map , set 차이점 알아보기
+// hash table, hash map, hash set 의 정확한 차이점과 언제 어떨때 사용하는지?
+
 
 
 import java.util.*;
-
 public class Hashing {
 
     static void hashSet(String str){
@@ -90,11 +94,24 @@ public class Hashing {
 
     static void hashTable(String str){
 
-
-
         Hashtable<Integer,String> hashTable = new Hashtable<Integer,String>();
 
+        hashTable.put(1,"first");
+        hashTable.put(2,"second");
+        hashTable.put(3,"third");
+        hashTable.put(4,"fouth");
 
+//        System.out.println(hashTable);
+
+        Hashtable<Integer,String> hashTable2 = new Hashtable<Integer,String>();
+
+
+
+        // clone method - 객체를 복제할때 사용.
+        hashTable2 = (Hashtable<Integer,String>)hashTable.clone();
+
+        hashTable.clear();
+        System.out.println("copy hash" + hashTable2);
     }
 
 
@@ -103,8 +120,8 @@ public class Hashing {
 
         String str = "hello";
 //        hashMap(str);
-        hashSet(str);
-
+//        hashSet(str);
+          hashTable(str);
 
     }
 
