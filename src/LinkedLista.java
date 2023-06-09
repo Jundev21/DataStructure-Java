@@ -1,8 +1,4 @@
 // 노드에는 각 데이터를 저장할 수 있는 정보와 다음 데이터를 가리킬수있는 넥스트가 필요하다.
-import org.w3c.dom.NodeList;
-import org.w3c.dom.ls.LSOutput;
-
-
 
 
 // 링크드 리스트 와 어레이 리스트의 차이점.
@@ -16,7 +12,7 @@ import org.w3c.dom.ls.LSOutput;
 // 데이터를 찾을때는 인덱스를 통해서 찾을 수 있기 때문에 이부분에서는 링크드 리스트 에 비해 빠르다.
 
 
-public class LinkedList {
+public class LinkedLista {
 
     static public class LinkedListClass{
 
