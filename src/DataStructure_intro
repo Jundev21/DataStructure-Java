@@ -7,6 +7,7 @@ Searching: O(n) if array is unsorted and O(log n) if array is sorted and somethi
 As pointed out by Aivean, there is no Delete operation available on Arrays. We can symbolically delete an element by setting it to some specific value, e.g. -1, 0, etc. depending on our requirements
 Similarly, Insert for arrays is basically Set as mentioned in the beginning
 
+
 ArrayList:
 Add: Amortized O(1)
 Remove: O(n)
