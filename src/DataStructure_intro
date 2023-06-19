@@ -1,5 +1,15 @@
 
-main data structure time complicity.
+Data structure time complicity.
+
+Three types of complicity
+Omega - best time
+Seta - average time
+Big O - worst time
+
+Three types of main Big O notation
+O(logn) - large than 1 less than O
+O(1) - just one time
+O(n) - n times
 
 Arrays
 Set, Check element at a particular index: O(1)
